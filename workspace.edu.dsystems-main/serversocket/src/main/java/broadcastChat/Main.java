@@ -11,9 +11,9 @@ public class Main {
     public static void main(String[] args) {
         int port = 1802;
         int backlog = 100;
-        String ip = "localhost";
 
-        Comunicaciones comunicaciones = new Comunicaciones(ip, port, backlog);
+
+        Comunicaciones comunicaciones = new Comunicaciones( port, backlog);
         comunicaciones.iniciar();
     }
 }
