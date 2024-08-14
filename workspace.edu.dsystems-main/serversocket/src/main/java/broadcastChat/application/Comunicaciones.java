@@ -8,8 +8,9 @@ public class Comunicaciones {
 
     private int port;
     private int backlog;
-
-    public Comunicaciones(int port, int backlog) {
+    private String ip;
+    public Comunicaciones(String ip, int port, int backlog) {
+        this.ip = ip;
         this.port = port;
         this.backlog = backlog;
     }
@@ -17,7 +18,7 @@ public class Comunicaciones {
     public void iniciar() {
         System.out.println("Java Server Socket");
 
-        JavaServerSocket javaServerSocket = new JavaServerSocket(port, backlog);
+        JavaServerSocket javaServerSocket = new JavaServerSocket(ip, port, backlog);
         ServerSocket serverSocket = javaServerSocket.get();
         if (serverSocket == null) {
             System.out.println("ServerSocket is null");
