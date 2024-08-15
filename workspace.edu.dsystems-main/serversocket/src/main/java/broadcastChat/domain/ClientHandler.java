@@ -11,7 +11,7 @@ public class ClientHandler implements Runnable {
     private Session session;
     private boolean running;
     private ChatService chatService;
-
+    private final BlockingQueue<String> outgoingMessages = new LinkedBlockingQueue<>();
     private String clientName;
 
     public ClientHandler(Socket clientSocket, ChatService chatService) throws IOException {
@@ -27,7 +27,8 @@ public class ClientHandler implements Runnable {
     public void run() {
         Thread listenerThread = new Thread(this::listenForMessages);
         listenerThread.start();
-
+        Thread writerThread = new Thread(this::processOutgoingMessages);
+        writerThread.start();
         try {
             listenerThread.join();
         } catch (InterruptedException e) {
@@ -53,7 +54,17 @@ public class ClientHandler implements Runnable {
             return "Unknown";
         }
     }
+    private void processOutgoingMessages() {
+        try {
 
+            while (running) {
+                String message = outgoingMessages.take();
+                session.write(message);
+            }
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void listenForMessages() {
         try {
             while (running) {
