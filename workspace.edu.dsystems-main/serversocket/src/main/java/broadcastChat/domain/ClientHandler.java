@@ -82,8 +82,8 @@ public class ClientHandler implements Runnable {
 
     public void sendMessage(String message) {
         try {
-            session.write(message);
-        } catch (IOException e) {
+            outgoingMessages.put(message);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
