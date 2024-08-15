@@ -11,13 +11,13 @@ public class ClientHandler implements Runnable {
     private Session session;
     private boolean running;
     private ChatService chatService;
-    private BlockingQueue<Object> messageQueue;
+
     private String clientName;
 
     public ClientHandler(Socket clientSocket, ChatService chatService) throws IOException {
         this.session = new Session(clientSocket);
         this.chatService = chatService;
-        this.messageQueue = new LinkedBlockingQueue<>();
+
         this.running = true;
 
         this.clientName = requestClientName();

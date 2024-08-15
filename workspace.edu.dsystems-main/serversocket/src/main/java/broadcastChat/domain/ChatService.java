@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ChatService {
+public class ChatService implements IchatService {
     private Set<ClientHandler> clientHandlers;
 
     public ChatService() {
