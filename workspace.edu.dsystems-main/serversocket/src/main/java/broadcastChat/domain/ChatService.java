@@ -15,12 +15,12 @@ public class ChatService implements IchatService {
 
     public synchronized void addClient(ClientHandler clientHandler) throws IOException {
         clientHandlers.add(clientHandler);
-        updateClientList(); // Actualiza la lista cuando se agrega un cliente
+        updateClientList();
     }
 
     public synchronized void removeClient(ClientHandler clientHandler) throws IOException {
         clientHandlers.remove(clientHandler);
-        updateClientList(); // Actualiza la lista cuando se elimina un cliente
+        updateClientList();
     }
 
     public synchronized void broadcastMessage(String message) throws IOException {

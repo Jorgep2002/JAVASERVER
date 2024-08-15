@@ -34,14 +34,14 @@ public class Comunicaciones {
                 continue;
             }
 
-            // Esperar un tiempo antes de reiniciar el servidor (opcional)
+
             try {
-                Thread.sleep(1000); // Espera de 1 segundo (ajustar según sea necesario)
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            // Reiniciar el servidor si es necesario
+
             System.out.println("Reiniciando el servidor...");
             if (!server.close()) {
                 System.out.println("Server close failed");
@@ -49,7 +49,7 @@ public class Comunicaciones {
                 System.out.println("Server closed, waiting for new connections...");
             }
 
-            // Reiniciar el servidor con una nueva instancia de ServerSocket
+
             serverSocket = javaServerSocket.get();
             if (serverSocket == null) {
                 System.out.println("ServerSocket is null after restart");

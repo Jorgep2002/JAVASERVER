@@ -29,10 +29,10 @@ public class Session {
       return this.dataInputStream.readUTF();
     } catch (EOFException e) {
       System.out.println("Connection closed by the client.");
-      throw e; // Propagar la excepción para manejarla en el nivel superior
+      throw e;
     } catch (IOException e) {
       e.printStackTrace();
-      throw e; // Propagar la excepción para manejarla en el nivel superior
+      throw e;
     }
   }
   public void write(String data) throws IOException {

@@ -11,14 +11,14 @@ import java.net.Socket;
 public class Server implements SocketProcess {
 	private ServerSocket serverSocket;
 	private boolean running;
-	private ChatService chatService; // Servicio de chat
-	private static final long CLIENT_LIST_UPDATE_INTERVAL = 2000; // Intervalo en milisegundos
+	private ChatService chatService;
+	private static final long CLIENT_LIST_UPDATE_INTERVAL = 2000;
 
 	public Server(ServerSocket serverSocket) {
 		this.serverSocket = serverSocket;
 		this.running = true;
-		this.chatService = new ChatService(); // Inicializar el servicio de chat
-		startClientListUpdater(); // Iniciar el hilo que actualiza la lista de clientes
+		this.chatService = new ChatService();
+		startClientListUpdater();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class Server implements SocketProcess {
 				System.out.println("New connection from IP: " + clientIP + ":" + clientPort);
 
 				ClientHandler clientHandler = new ClientHandler(clientSocket, chatService);
-				chatService.addClient(clientHandler); // Agregar cliente al servicio
+				chatService.addClient(clientHandler);
 
 				Thread clientThread = new Thread(clientHandler);
 				clientThread.start();
@@ -48,7 +48,7 @@ public class Server implements SocketProcess {
 			while (running) {
 				try {
 					Thread.sleep(CLIENT_LIST_UPDATE_INTERVAL);
-					chatService.updateClientList(); // Actualizar y enviar la lista de clientes periódicamente
+					chatService.updateClientList();
 				} catch (InterruptedException | IOException e) {
 					e.printStackTrace();
 				}
@@ -61,7 +61,7 @@ public class Server implements SocketProcess {
 		try {
 			running = false;
 			for (ClientHandler clientHandler : chatService.getClientHandlers()) {
-				clientHandler.close(); // Cerrar cada cliente
+				clientHandler.close();
 			}
 			this.serverSocket.close();
 			return true;
