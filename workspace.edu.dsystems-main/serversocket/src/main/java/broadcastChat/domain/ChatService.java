@@ -23,7 +23,7 @@ public class ChatService {
         updateClientList(); // Actualiza la lista cuando se elimina un cliente
     }
 
-    public synchronized void broadcastMessage(Object message) throws IOException {
+    public synchronized void broadcastMessage(String message) throws IOException {
         for (ClientHandler clientHandler : clientHandlers) {
             clientHandler.sendMessage(message);
         }

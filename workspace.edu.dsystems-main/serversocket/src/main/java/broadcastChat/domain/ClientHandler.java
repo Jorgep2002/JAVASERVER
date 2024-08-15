@@ -48,7 +48,7 @@ public class ClientHandler implements Runnable {
     private String requestClientName() {
         try {
             return (String) session.read();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException  e) {
             e.printStackTrace();
             return "Unknown";
         }
@@ -64,12 +64,12 @@ public class ClientHandler implements Runnable {
                     chatService.broadcastMessage(clientName + ": " + data);
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException  e) {
             e.printStackTrace();
         }
     }
 
-    public void sendMessage(Object message) {
+    public void sendMessage(String message) {
         try {
             session.write(message);
         } catch (IOException e) {

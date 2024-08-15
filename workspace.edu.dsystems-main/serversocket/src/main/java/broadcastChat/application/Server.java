@@ -11,7 +11,7 @@ public class Server implements SocketProcess {
 	private ServerSocket serverSocket;
 	private boolean running;
 	private ChatService chatService; // Servicio de chat
-	private static final long CLIENT_LIST_UPDATE_INTERVAL = 5000; // Intervalo en milisegundos
+	private static final long CLIENT_LIST_UPDATE_INTERVAL = 2000; // Intervalo en milisegundos
 
 	public Server(ServerSocket serverSocket) {
 		this.serverSocket = serverSocket;

@@ -2,43 +2,44 @@ package broadcastChat.infrastructure;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
 import java.net.Socket;
 
-public class Session implements Runnable{
-  private ObjectOutputStream objectOutputStream;
-	private ObjectInputStream objectInputStream;
+public class Session {
+  private DataOutputStream dataOutputStream;
+  private DataInputStream dataInputStream;
 	private Socket socket;
 
   public Session(Socket socket) {
     try {
       this.socket = socket;
-      this.objectOutputStream = new ObjectOutputStream(this.socket.getOutputStream());
-      this.objectInputStream = new ObjectInputStream(this.socket.getInputStream());
+      this.dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
+      this.dataInputStream = new DataInputStream(this.socket.getInputStream());
     } catch (Exception e) {
       e.printStackTrace();
-      this.objectOutputStream = null;
-			this.objectInputStream = null;
+      this.dataOutputStream = null;
+			this.dataInputStream = null;
 			this.socket = null;
     }
   }
 
-  public Object read() throws IOException, ClassNotFoundException {
+  public Object read() throws IOException {
     try {
-      return this.objectInputStream.readObject();
+      return this.dataInputStream.readUTF();
     } catch (EOFException e) {
       System.out.println("Connection closed by the client.");
       throw e; // Propagar la excepción para manejarla en el nivel superior
-    } catch (ClassNotFoundException | IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
       throw e; // Propagar la excepción para manejarla en el nivel superior
     }
   }
-  public void write(Object data) throws IOException {
+  public void write(String data) throws IOException {
     try {
-      this.objectOutputStream.writeObject(data);
-      this.objectOutputStream.flush();
+      this.dataOutputStream.writeUTF(data);
+      this.dataOutputStream.flush();
     } catch (IOException e) {
       e.printStackTrace();
       throw e;
@@ -47,23 +48,20 @@ public class Session implements Runnable{
 
   public void close() throws IOException {
     try {
-      if (this.objectOutputStream != null) {
-        this.objectOutputStream.close();
+      if (this.dataOutputStream != null) {
+        this.dataOutputStream.close();
       }
-      if (this.objectInputStream != null) {
-        this.objectInputStream.close();
+      if (this.dataInputStream != null) {
+        this.dataInputStream.close();
       }
       if (this.socket != null) {
         this.socket.close();
       }
     } catch (IOException e) {
       e.printStackTrace();
-      throw e; // Propagar la excepción para manejarla en el nivel superior
+      throw e;
     }
   }
 
-  @Override
-  public void run() {
 
-  }
 }
